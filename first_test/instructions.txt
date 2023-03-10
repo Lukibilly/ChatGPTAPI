@@ -1,0 +1,5 @@
+1. Create new conda environment
+conda create --name llm --file requirements.txt
+2. Create environment variable with Openai API Key
+3. Download IPYNB
+4. Profit
