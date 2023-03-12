@@ -1,16 +1,27 @@
 import time
-import openai
-import os
-from dotenv import load_dotenv
-load_dotenv()
-key = os.getenv('OPENAI_API_KEY')
-openai.api_key = key
+from custom_openai import *
 
 
 def main():
-    while True:
-        new_message = input('\nUSER: ')
-        timestamp = time()
+    clear_console()
+    params = init_params()
+    type="assistant"
+    messages = init_messages(type)
 
-if __name__ == 'main':
+    while True:        
+        new_message = input('\nUSER: ')
+        # Check if reset needed
+        if(new_message == "reset"):
+            messages = init_messages(type)
+            clear_console()
+            continue
+        add_message(messages, "user", new_message)
+
+        answer = get_completion(params, messages)
+        answer_content = answer['choices'][0]['message']['content']
+        print("\nCHATBOT: ",answer_content)
+
+        add_message(messages, "system", answer_content)
+
+if __name__ == '__main__':
     main()
